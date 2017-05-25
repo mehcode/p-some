@@ -1,6 +1,4 @@
 'use strict';
-const AggregateError = require('aggregate-error');
-
 module.exports = (iterable, count) => new Promise((resolve, reject) => {
 	if (!Number.isFinite(count)) {
 		throw new TypeError(`Expected a finite number, got ${typeof count}`);
@@ -34,7 +32,12 @@ module.exports = (iterable, count) => new Promise((resolve, reject) => {
 
 		if (--maxErrors === 0) {
 			done = true;
-			reject(new AggregateError(errors));
+			if (errors.length === 1) {
+				reject(errors[0]);
+			} else {
+				// TODO: Some kind of string repr of those errors
+				reject(new Error("Multiple errors occurred"));
+			}
 		}
 	};
 
