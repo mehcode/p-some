@@ -51,5 +51,3 @@ module.exports = (iterable, count) => new Promise((resolve, reject) => {
 		throw new RangeError(`Expected input to contain at least ${count} items, but contains ${elCount} items`);
 	}
 });
-
-module.exports.AggregateError = AggregateError;
